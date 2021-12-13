@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Food_store.Models.ApplicationType>  //Перечисление объектов Application Type
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Список типов продуктов</h2>
+        </div>
+        <div class="col-6 text-right"> 
+            <a asp-action="Create" class="btn btn-primary"> @*Переход к action методу (Create) внутри CategoryController*@
+                <i class="fas fa-plus"></i> &nbsp; Создать новый тип продукта
+            </a> 
+        </div>
+    </div>
+
+    <br /><br />
+
+    @if (Model.Count() > 0) //Проверяем наличие содержимого в списке Category
+    {
+        <table class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Название
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model) //Перебор всех категорий
+                {
+                    <tr>
+                        <td width="50%">@obj.Name</td>
+                        <td class="text-center">
+                            <div class="w-75 btn-group" role="group">
+                                <a asp-route-Id="@obj.id" asp-action="Edit" class="btn btn-primary mx-2">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a asp-route-Id="@obj.id" asp-action="Delete" class="btn btn-danger mx-2">
+                                    @*asp-route-Id="@obj.id" - передача id при переходе по ссылке*@
+                                    <i class="far fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p> Тип продукта не найден.</p>
+    }
+
+</div>

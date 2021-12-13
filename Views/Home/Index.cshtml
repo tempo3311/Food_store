@@ -1,0 +1,40 @@
+﻿@model Food_store.Models.ViewModels.HomeVM
+
+<div class="container">
+    <div class="text-center">
+        <button class="btn btn-dark filter-button mb-1" data-filter="all">Все</button>
+        @foreach (var obj in Model.Categories)
+        {
+            <button class="btn btn-outline-secondary filter-button mb-1" data-filter="@obj.Name.Replace(' ','_')">
+                @obj.Name
+            </button>
+        }
+    </div>
+    <br />
+    <div class="row">
+        @foreach (var prod in Model.Products)
+        {
+            <partial name="_IndividualProductCard" model="prod" />//передаём частичному представлению "_IndividualProductCard" отдельный товар "prod"
+            //Показываем все товары
+        }
+    </div>
+</div>
+
+@section Scripts{
+    <script> //jQuery
+    $(document).ready(function(){
+        $(".filter-button").click(function () { //проверяется клик на кнопку filter-button
+            var value = $(this).attr('data-filter'); //при нажатии проверяется значение атрибута из data-filter
+        if(value == "all")
+        {
+            $('.filter').show('1000'); //переключается класс фильтра
+        }
+        else
+        {
+            $(".filter").not('.' + value).hide('3000'); //класс фильтр добавляется внутрь _IndividualProductCard для контролля
+            $('.filter').filter('.'+value).show('3000');
+        }
+    });
+});
+    </script>
+}

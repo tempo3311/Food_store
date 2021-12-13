@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Food_store.Models.Product>  //Перечисление объектов Category
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Список продуктов</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-action="Upsert" class="btn btn-primary">
+                @*Переход к action методу (Create) внутри CategoryController*@
+                <i class="fas fa-plus"></i> &nbsp; Создать новый продукт
+            </a>
+        </div>
+    </div>
+
+    <br /><br />
+
+    @if (Model.Count() > 0) //Проверяем наличие содержимого в списке Category
+    {
+        <table class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Название продукта
+                    </th>
+                    <th>
+                        Цена
+                    </th>
+                    <th>
+                        Категория
+                    </th>
+                    <th>
+                        Тип продукта
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model) //Перебор всех категорий
+                {
+                <tr>
+                    <td width="30%">@obj.Name</td>
+                    <td width="10%">@obj.Price</td>
+                    <td width="20%">@obj.Category.Name</td>
+                    <td width="20%">@obj.ApplicationType.Name</td>
+                    <td class="text-center">
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-route-Id="@obj.Id" asp-action="Upsert" class="btn btn-primary mx-2">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a asp-route-Id="@obj.Id" asp-action="Delete" class="btn btn-danger mx-2">
+                                @*asp-route-Id="@obj.id" - передача id при переходе по ссылке*@
+                                <i class="far fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p> Продукта не существует.</p>
+    }
+
+</div>
